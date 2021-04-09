@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use Cake\Controller\Controller;
+use \cake\event\EventInterface;
 
 /**
  * Application Controller
@@ -28,6 +29,12 @@ use Cake\Controller\Controller;
  */
 class AppController extends Controller
 {
+    public function beforeFilter(EventInterface $event)
+    {
+        parent::beforeFilter($event);
+        $this->Authentication->addUnauthenticatedActions(["index", "view", "login"]);
+    }
+
     /**
      * Initialization hook method.
      *
