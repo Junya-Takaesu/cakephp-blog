@@ -20,7 +20,10 @@ class ArticlesController extends AppController
 
     public function view($slug = null)
     {
-        $article = $this->Articles->findBySlug($slug)->firstOrFail();
+        $article = $this->Articles
+            ->findBySlug($slug)
+            ->contain("Tags")
+            ->firstOrFail();
         $this->set(compact("article"));
     }
 
@@ -47,6 +50,7 @@ class ArticlesController extends AppController
     {
         $article = $this->Articles
             ->findBySlug($slug)
+            ->contain("Tags")
             ->firstOrFail();
 
         if ($this->request->is(["post", "put"])) {
